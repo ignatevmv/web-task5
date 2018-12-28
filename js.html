@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+    <script>
+
+    	// Task 5.1
+    	var items = [
+    		{
+    			text: 'Животные',
+    			childs: [
+    				{
+    					text: 'Млекопитающие',
+    					childs: [
+    						{
+    							text: 'Коровы',
+    						},
+    						{
+    							text: 'Ослы',
+    						},
+    						{
+    							text: 'Собаки',
+    						},
+    						{
+    							text: 'Тигры',
+    						},
+    					]
+    				},
+    				{
+    					text: 'Другие',
+    					childs: [
+    						{
+    							text: 'Змеи',
+    						},
+    						{
+    							text: 'Птицы',
+    						},
+    						{
+    							text: 'Ящирицы',
+    						},
+    					]
+    				}
+    			]
+    		},
+    		{
+    			text: 'Рыбы',
+    			childs: [
+    				{
+    					text: 'Аквариумные',
+    					childs: [
+    						{
+    							text: 'Гуппи',
+    						},
+    						{
+    							text: 'Скалярии',
+    						},
+    					]
+    				},
+    				{
+    					text: 'Морские',
+    					childs: [
+    						{
+    							text: 'Морская форель',
+    						},
+    					]
+    				}
+    			]
+    		}
+    	];
+
+    	var list = document.createElement('ul');
+
+    	for(let i = 0; i < items.length; i++)
+    	{
+    		item_bypass(items[i], list);
+    	}
+
+    	document.body.append(list);
+
+    	function item_bypass(item, parent){
+    		var li = document.createElement('li');
+    		li.appendChild(document.createTextNode(item.text));
+    		li.setAttribute('text', item.text);
+    		if(item.hasOwnProperty('childs')){
+    			var ul = document.createElement('ul');
+    			for(key in item.childs){
+    				item_bypass(item.childs[key], ul);	
+    			}
+    			li.appendChild(ul);
+    		}
+    		parent.appendChild(li);		
+    	}
+
+    	//Task 5.2
+    	walk_dom(document.documentElement)
+
+    	function walk_dom(element){
+    		console.log('Вошли в ' + element.tagName 
+    			+ (element.tagName === 'LI' ? ' (' + element.getAttribute('text') + ')' : ''));
+    		for(var key in element.childNodes){
+    			var child = element.childNodes[key];
+    			if(child instanceof HTMLElement){
+    				walk_dom(child);
+    			}    			
+    		}
+    		console.log('Вышли из ' + element.tagName 
+    			+ (element.tagName === 'LI' ? ' (' + element.getAttribute('text') + ')' : ''));
+    	}
+
+    </script>
+</body>
+</html>
